@@ -1,4 +1,4 @@
-module github.com/acorn-io/cmd
+module github.com/gptscript-ai/cmd
 
 go 1.21.0
 
