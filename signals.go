@@ -43,7 +43,7 @@ func SetupSignalContext() context.Context {
 	shutdownHandler = make(chan os.Signal, 2)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	signal.Notify(shutdownHandler, shutdownSignals...)
+	signal.Notify(shutdownHandler, ShutdownSignals...)
 	go func() {
 		<-shutdownHandler
 		cancel()
@@ -59,7 +59,7 @@ func SetupSignalContext() context.Context {
 func RequestShutdown() bool {
 	if shutdownHandler != nil {
 		select {
-		case shutdownHandler <- shutdownSignals[0]:
+		case shutdownHandler <- ShutdownSignals[0]:
 			return true
 		default:
 		}
