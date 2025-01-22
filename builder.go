@@ -194,7 +194,7 @@ func command(obj Runnable, parentEnv string, children ...any) *cobra.Command {
 			}
 			flags.StringSliceP(name, alias, nil, usage)
 		case reflect.Bool:
-			flags.BoolVarP((*bool)(unsafe.Pointer(v.Addr().Pointer())), name, alias, false, usage)
+			flags.BoolVarP((*bool)(unsafe.Pointer(v.Addr().Pointer())), name, alias, defValue == "true", usage)
 		case reflect.Pointer:
 			switch fieldType.Type.Elem().Kind() {
 			case reflect.Int:
