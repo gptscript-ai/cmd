@@ -157,6 +157,10 @@ func command(obj Runnable, parentEnv string, children ...any) *cobra.Command {
 		if err != nil {
 			defInt = 0
 		}
+		defFloat, err := strconv.ParseFloat(defValue, 32)
+		if err != nil {
+			defFloat = 0
+		}
 
 		if len(env) > 0 {
 			usage += fmt.Sprintf(" ($%s)", strings.Join(env, ","))
@@ -176,6 +180,8 @@ func command(obj Runnable, parentEnv string, children ...any) *cobra.Command {
 			flags.IntVarP((*int)(unsafe.Pointer(v.Addr().Pointer())), name, alias, defInt, usage)
 		case reflect.String:
 			flags.StringVarP((*string)(unsafe.Pointer(v.Addr().Pointer())), name, alias, defValue, usage)
+		case reflect.Float64:
+			flags.Float64VarP((*float64)(unsafe.Pointer(v.Addr().Pointer())), name, alias, defFloat, usage)
 		case reflect.Slice:
 			switch fieldType.Tag.Get("split") {
 			case "false":
